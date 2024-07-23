@@ -41,9 +41,15 @@ class ContactLocationClient(Node):
 def main():
     rclpy.init()
 
+    # Set the index depending on if a command line argument is given
+    if len(sys.argv) == 2:
+        index = str(sys.argv[1])
+    else:
+        index = "1"
+
     contact_location_client = ContactLocationClient()
     while rclpy.ok():
-        future = contact_location_client.send_request(0)
+        future = contact_location_client.send_request(index)
         rclpy.spin_until_future_complete(contact_location_client, future)
         response = future.result()
 
