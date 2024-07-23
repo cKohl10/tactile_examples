@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'contact_locations_client = tactile_examples.contact_locations_client:main',
         ],
     },
 )
