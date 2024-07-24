@@ -13,7 +13,7 @@ class TouchSensorPublisher(Node):
     def timer_callback(self):
         msg = Vector3()
         # Generate a random position between -5 and 5 for all x, y, and z values
-        msg.x = float(random.uniform(-0.5, 0.5))
+        msg.x = 0.6
         msg.y = float(random.uniform(-0.5, 0.5))
         msg.z = float(random.uniform(0.2, 0.5))
 

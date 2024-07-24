@@ -12,9 +12,9 @@ class EndEffectorGraspPublisher(Node):
     def timer_callback(self):
         msg = Pose()
         # Generate a random position between -5 and 5 for all x, y, and z values
-        msg.position.x = float(random.uniform(-0.5, 0.5))
-        msg.position.y = float(random.uniform(-0.5, 0.5))
-        msg.position.z = float(random.uniform(0.2, 0.5))
+        msg.position.x = 0.6
+        msg.position.y = float(random.uniform(-0.7, 0.7))
+        msg.position.z = float(random.uniform(0.2, 0.7))
 
         # Generate a slightly random orientation for the end effector (Quaternions)
         msg.orientation.x = float(random.uniform(-0.1, 0.1))
