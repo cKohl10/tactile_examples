@@ -21,6 +21,9 @@ setup(
     entry_points={
         'console_scripts': [
             'contact_locations_client = tactile_examples.contact_locations_client:main',
+            'rand_touch_pos_pub = tactile_examples.rand_touch_pos_pub:main',
+            'rand_touch_data_pub = tactile_examples.rand_touch_data_pub:main',
+            'rand_ee_teleop_pub = tactile_examples.rand_ee_teleop_pub:main',
         ],
     },
 )
