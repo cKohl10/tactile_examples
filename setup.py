@@ -24,6 +24,7 @@ setup(
             'rand_touch_pos_pub = tactile_examples.rand_touch_pos_pub:main',
             'rand_touch_data_pub = tactile_examples.rand_touch_data_pub:main',
             'rand_ee_teleop_pub = tactile_examples.rand_ee_teleop_pub:main',
+            'set_spawn_dist_pub = tactile_examples.set_spawn_dist_pub:main',
         ],
     },
 )
