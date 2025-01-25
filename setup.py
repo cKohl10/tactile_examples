@@ -26,6 +26,7 @@ setup(
             'rand_ee_teleop_pub = tactile_examples.rand_ee_teleop_pub:main',
             'rand_joint_angles_pub = tactile_examples.rand_joint_angles_pub:main',
             'set_spawn_dist_pub = tactile_examples.set_spawn_dist_pub:main',
+            'motor_bab_pub = tactile_examples.motor_bab_pub:main',
         ],
     },
 )
