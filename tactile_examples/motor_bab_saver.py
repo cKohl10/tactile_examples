@@ -84,8 +84,10 @@ class MotorBabblingSaver(Node):
     def capture_callback(self, request, response):
         try:
             self.joint_save()
+            i = 0
             for camera in self.camera_indices:
-                self.image_callback(self.camera_indices[camera], camera, True)
+                self.image_callback(i, camera, True)
+                i += 1
             response.success = True
             response.message = "Image captured successfully"
             self.get_logger().info(f'Capture {self.index} saved')
