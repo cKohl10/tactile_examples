@@ -2,9 +2,11 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import JointState
 from std_srvs.srv import Trigger
+from std_msgs.msg import Bool
 import random
 import math
 import time
+import asyncio
 """
 This script publishes random joint angles to the Franka robot.
 """
@@ -14,9 +16,13 @@ class MotorBabblerPublisher(Node):
         super().__init__('motor_babbler_publisher')
         # Joint state publisher
         self.joint_publisher = self.create_publisher(JointState, '/franka/command/joint_states', 1)
+
+        # Create a subscriber that will give the go ahead to move on to the next capture
+        self.go_ahead_subscriber = self.create_subscription(Bool, '/go_ahead', self.go_ahead_callback, 1)
+        self.go_ahead = True
         
         # List of camera service names
-        self.camera_services = ['/camera/capture_front']  # Add more camera services as needed
+        self.camera_services = ['/camera/capture']  # Add more camera services as needed
         # Create service clients for each camera
         self.capture_clients = {
             service: self.create_client(Trigger, service)
@@ -37,6 +43,10 @@ class MotorBabblerPublisher(Node):
                                for k, v in self.joint_limits_deg.items()}
         
         self.running = True
+
+    def go_ahead_callback(self, msg):
+
+        self.go_ahead = msg.data
 
     def send_joint_angles(self):
         joint_msg = JointState()
@@ -65,18 +75,20 @@ class MotorBabblerPublisher(Node):
             self.get_logger().error(f'Service call failed for {service_name}: {str(e)}')
 
     async def run_schedule(self):
-        # Send joint angles
-        self.send_joint_angles()
-        
-        # Wait 7 seconds
-        self.get_logger().info('Waiting 7 seconds for robot to move...')
-        for i in range(7, 0, -1):
-            self.get_logger().info(f'{i} seconds remaining...')
-            time.sleep(1)
+        if self.go_ahead:
+            # Send joint angles
+            self.send_joint_angles()
             
-        # Request captures from all cameras
-        for camera_service in self.camera_services:
-            await self.request_camera_capture(camera_service)
+            # Wait 7 seconds
+            self.get_logger().info('Waiting 7 seconds for robot to move...')
+            for i in range(7, 0, -1):
+                self.get_logger().info(f'{i} seconds remaining...')
+                time.sleep(1)
+                
+            # Request captures from all cameras
+            for camera_service in self.camera_services:
+                await self.request_camera_capture(camera_service)
+
 
     async def main_loop(self):
         while self.running:
