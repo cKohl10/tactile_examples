@@ -11,7 +11,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=['setuptools', 'cv_bridge'],
     zip_safe=True,
     maintainer='carson',
     maintainer_email='carson.kohlbrenner@gmail.com',
@@ -27,6 +27,8 @@ setup(
             'rand_joint_angles_pub = tactile_examples.rand_joint_angles_pub:main',
             'set_spawn_dist_pub = tactile_examples.set_spawn_dist_pub:main',
             'motor_bab_pub = tactile_examples.motor_bab_pub:main',
+            'motor_bab_saver = tactile_examples.motor_bab_saver:main',
+            'faux_camera_service = tactile_examples.faux_camera_service:main',
         ],
     },
 )
